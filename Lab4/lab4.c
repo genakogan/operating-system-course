@@ -21,12 +21,7 @@ void *func_one(void *ptr);
 void example4();
 void *thread(void *vargp);
 
-pthread_t newThread;
-pthread_cond_t cond1 = PTHREAD_COND_INITIALIZER;
-void example5();
-void *startHere(void *message);
 
-void example6();
 
 
 int main(int argc, char **argv)
