@@ -8,7 +8,7 @@ void example3();
 void example4();
 void example5();
 void example6();
-
+void example7();
 
 int main(int argc, char **argv)
 {
@@ -18,7 +18,8 @@ int main(int argc, char **argv)
 	//example3();
 	//example4();
 	//example5();
-	example6();
+	//example6();
+	example7();
 	return 0;
 
 }
