@@ -79,3 +79,30 @@ int main(int argc, char **argv)
   exit(0);
   return 0;
 }
+
+
+
+/*
+Output:
+Enter Testcase - QP0WTEST/TPCOS0
+Create 2 threads
+Thread blocked
+Thread blocked
+Wake up a worker, work to do...
+Thread awake, finish work!
+Thread blocked
+Wake up a worker, work to do...
+Thread awake, finish work!
+Thread blocked
+Wake up a worker, work to do...
+Thread awake, finish work!
+Thread blocked
+Wake up a worker, work to do...
+Thread awake, finish work!
+Thread blocked
+Wake up a worker, work to do...
+Thread awake, finish work!
+Thread blocked
+Main completed
+
+*/
