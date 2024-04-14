@@ -6,6 +6,7 @@ pthread_mutex_t my_mutex;
 
 void* thread_func(void* arg) {
     // Attempt to acquire the mutex
+
     int ret = pthread_mutex_trylock(&my_mutex);
 
     if (ret == 0) {
@@ -45,3 +46,4 @@ int main() {
 
     return 0;
 }
+

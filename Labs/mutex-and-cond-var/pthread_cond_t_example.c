@@ -3,7 +3,7 @@
 #include <pthread.h>
 
 pthread_mutex_t my_mutex;
-pthread_cond_t my_cond;
+pthread_cond_t my_cond = PHTREAD_СOND_INITIALIZER;
 
 int data = 0;
 
