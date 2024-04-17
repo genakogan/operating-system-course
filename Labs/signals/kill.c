@@ -6,7 +6,7 @@
 
 void quitproc()
 {
-    printf("\n i am child: my father ended me \n");
+    printf("\n i am child: my father end me \n");
     exit(0);
 }
 
