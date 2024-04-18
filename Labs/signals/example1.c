@@ -55,4 +55,5 @@ int main(void){
 27. SIGSTKFLT (Stack Fault): This signal is sent when a coprocessor stack overflow or underflow occurs.
 28. SIGTSTP (Terminal Stop Signal): This signal is typically sent by pressing Ctrl+Z and requests the process to stop.
 29. SIGXCPU (CPU Time Limit Exceeded): This signal is generated when a process exceeds its CPU time limit.
-30. SIGWINCH (Window Size Change): This signal is sent to a process when the terminal window size changes.*/
+30. SIGWINCH (Window Size Change): This signal is sent to a process when the terminal window size changes.
+ */
