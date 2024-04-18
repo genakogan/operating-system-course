@@ -3,6 +3,7 @@
 #include <signal.h>
 #include <stdlib.h>
 
+
 /*SIGUSR1 and SIGUSR2 are signals in Unix-like operating
 systems that are reserved for user-defined purposes.
 Their names stand for "User Signal 1" and "User Signal 2,"
@@ -22,6 +23,7 @@ define how they should be handled within their
 application. They can be used for a wide variety
 of purposes depending on the needs of the application
 being developed.*/
+
 
 pid_t pid;
 int counter = 0;
