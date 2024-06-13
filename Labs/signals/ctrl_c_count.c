@@ -3,7 +3,7 @@
 
 int i=0;
 void my_handler(int sig){
-    printf("Receive signal %d, CTRL-C pressed, num of presses: %d\n", nsig, i+1);
+    printf("Receive signal %d, CTRL-C pressed, num of presses: %d\n", sig, i+1);
     i=i+1;
     if (i==5){
         printf("The process will exit now");
