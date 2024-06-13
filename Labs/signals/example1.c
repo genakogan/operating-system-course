@@ -16,7 +16,7 @@ int main(void){
     process or spawning new child processes.
     */
     signal(SIGCHLD, handler);
-    if ((pid=fork())==0){
+    if ((pid=fork())==0)ֹ{
         val -= 3;
         exit(0);
     }
