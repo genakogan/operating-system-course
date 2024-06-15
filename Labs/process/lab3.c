@@ -91,6 +91,18 @@ void example7(){
 	}
 }
 
+
+// Macros for Interpreting the Status
+// WIFEXITED(status): Returns true if the child terminated normally.
+// WEXITSTATUS(status): Returns the exit status of the child. This macro should only be used if WIFEXITED(status) returned true.
+// WIFSIGNALED(status): Returns true if the child process was terminated by a signal.
+// WTERMSIG(status): Returns the number of the signal that caused the child process to terminate. This macro should only be used if WIFSIGNALED(status) returned true.
+// WIFSTOPPED(status): Returns true if the child process is currently stopped.
+// WSTOPSIG(status): Returns the number of the signal that caused the child process to stop. This macro should only be used if WIFSTOPPED(status) returned true.
+// WIFCONTINUED(status): Returns true if the child process was resumed by delivery of SIGCONT.
+
+
+
 //======================================
 
 void example8(){
