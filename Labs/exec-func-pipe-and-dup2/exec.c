@@ -7,8 +7,6 @@ arguments and how they handle the environment and the path to the executable.
 
 // =================================================================================
 
-//  execl
-
 int execl(const char *path, const char *arg, ...);
 
 /*
@@ -64,7 +62,6 @@ Arguments:
 // =================================================================================
 
 int execvp(const char *file, char *const argv[]);
-
 
 /*
 Usage:
