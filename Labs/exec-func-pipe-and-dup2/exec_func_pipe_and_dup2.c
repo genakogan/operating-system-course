@@ -209,71 +209,156 @@ int example7(){
 
 		exit(0);
 	}
+    return 0;
 }
 
 //======================================
-  
-int example8() 
+
+
+#define READ 0
+#define WRITE 1
+
+int example8(){
+
+    int p[2];
+
+    if (pipe(p) == -1) {
+        perror("pipe error");
+        exit(EXIT_FAILURE);
+    }
+
+    pid_t num = fork();
+
+    if (num == -1) {
+        perror("fork error");
+        exit(EXIT_FAILURE);
+    }
+
+    if (num == 0) {
+
+        close(p[READ]);
+        dup2(p[WRITE], STDOUT_FILENO);
+        close(p[WRITE]);
+
+        execlp("ls", "ls", "-l", NULL);
+
+        perror("execlp");
+        exit(EXIT_FAILURE);
+    } else {
+
+        close(p[WRITE]);
+        dup2(p[READ], STDIN_FILENO);
+        close(p[READ]);
+
+
+        execlp("sort", "sort", "-r", NULL);
+
+        perror("execlp");
+        exit(EXIT_FAILURE);
+    }
+
+    return 0;
+
+}
+
+//======================================
+
+int example9()
 { 
     int file_desc = open("dup2.txt",O_WRONLY | O_APPEND); 
       
     // here the newfd is the file descriptor of stdout (i.e. 1) 
     // standart input (stdin): File descriptor 0
-    // standart output (stdout): File descriptor 1
+    //    // standart output (stdout): File descriptor 1
     // standart Error (stderr): File descriptor 2
     dup2(file_desc, 1) ;  
           
     // All the printf statements will be written in the file 
-    // "tricky.txt" 
+    // "dup2.txt"
     printf("I will be printed in the file tricky.txt\n"); 
       
 return 0; 
-} 
+}
+
+//======================================
+
+int example10(){
+
+    int fd;
+    pid_t pid;
+
+    // Open a file "output.txt" for writing (create if not exist, truncate if exist)
+    fd = open("output.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+    if (fd == -1) {
+        perror("open failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // Create a child process
+    pid = fork();
+
+    if (pid == -1) {
+        perror("fork failed");
+        exit(EXIT_FAILURE);
+    } else if (pid == 0) {
+        // Child process
+
+        // Redirect the file descriptor 1 (stdout) to fd
+        if (dup2(fd, 1) == -1) {
+            perror("dup2 failed");
+            exit(EXIT_FAILURE);
+        }
+
+        // Close the original file descriptor fd
+        close(fd);
+
+        // Execute a command whose output will be redirected to "output.txt"
+        execlp("ls", "ls", "-l", NULL);
+        perror("execlp failed");  // execlp will only return on error
+        exit(EXIT_FAILURE);
+    } else {
+        // Parent process
+        // Wait for the child to finish
+        wait(NULL);
+
+        // Close the file descriptor in the parent
+        close(fd);
+
+        printf("Parent process continues...\n");
+    }
+
+    return 0;
+}
 
 //======================================
 
 #define READ 0
 #define WRITE 1
 
-int example9(){
+int example11(){
 
-	  int p[2];
-	  
-    if (pipe(p) == -1) {
-        perror("pipe error");
-        exit(EXIT_FAILURE);
+    // Open a file
+    int fd = open("output.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (fd == -1) {
+        perror("Failed to open file");
+        return 1;
     }
-    
-    pid_t num = fork();
-    
-    if (num == -1) {
-        perror("fork error");
-        exit(EXIT_FAILURE);
+
+    // Duplicate file descriptor to use the opened file descriptor
+    int new_fd = dup2(fd, 100); // Duplicate fd to a custom file descriptor (100)
+    if (new_fd == -1) {
+        perror("dup2");
+        return 1;
     }
-    
-    if (num == 0) {
-                
-        close(p[READ]);
-        dup2(p[WRITE], STDOUT_FILENO);  
-        close(p[WRITE]); 
-        
-              execlp("ls", "ls", "-l", NULL);
-      
-        perror("execlp");
-        exit(EXIT_FAILURE);
-    } else {
-               
-        close(p[WRITE]); 
-        dup2(p[READ], STDIN_FILENO);  
-        close(p[READ]); 
-        
-      
-        execlp("sort", "sort", "-r", NULL);
-        
-        perror("execlp");
-        exit(EXIT_FAILURE);
-    }
-    
+
+    // Now the custom file descriptor (100) will point to 'output.txt'
+
+    // Write to the custom file descriptor
+    dprintf(100, "This will be written to the file 'output.txt'.\n");
+
+    // Close the original file descriptor
+    close(fd);
+
     return 0;
 	
 } 
@@ -294,10 +379,12 @@ int main(int argc, char *argv[]){
 	//pipe
 	//example6();
 	//example7();
-	
+    //example8();
+
 	//dup
-	//example8();
-	example9();
+	//example9();
+	//example10();
+    //example11();
 	return 0;
 	
 }
