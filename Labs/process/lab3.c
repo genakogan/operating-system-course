@@ -91,9 +91,63 @@ void example7(){
 	}
 }
 
+
+// Macros for Interpreting the Status (see example8)
+// WIFEXITED(status): Returns true if the child terminated normally.
+// WEXITSTATUS(status): Returns the exit status of the child. This macro should only be used if WIFEXITED(status) returned true.
+// WIFSIGNALED(status): Returns true if the child process was terminated by a signal.
+// WTERMSIG(status): Returns the number of the signal that caused the child process to terminate. This macro should only be used if WIFSIGNALED(status) returned true.
+// WIFSTOPPED(status): Returns true if the child process is currently stopped.
+// WSTOPSIG(status): Returns the number of the signal that caused the child process to stop. This macro should only be used if WIFSTOPPED(status) returned true.
+// WIFCONTINUED(status): Returns true if the child process was resumed by delivery of SIGCONT.
+
+
 //======================================
 
 void example8(){
+pid_t pid = fork();
+
+    if (pid < 0) {
+        // Fork failed
+        perror("fork");
+        exit(EXIT_FAILURE);
+    } else if (pid == 0) {
+        // Child process
+        printf("Child process (PID: %d) is running...\n", getpid());
+        sleep(2); // Simulate some work
+        printf("Child process (PID: %d) is terminating...\n", getpid());
+        _exit(42); // Terminate child with exit status 42
+    } else {
+        // Parent process
+        int status;
+        pid_t child_pid = wait(&status);
+
+        if (child_pid > 0) {
+            if (WIFEXITED(status)) {
+                int exit_status = WEXITSTATUS(status);
+                printf("Child process (PID: %d) terminated with exit status %d\n", child_pid, exit_status);
+            } else if (WIFSIGNALED(status)) {
+                int signal_number = WTERMSIG(status);
+                printf("Child process (PID: %d) terminated due to signal %d\n", child_pid, signal_number);
+            } else if (WIFSTOPPED(status)) {
+                int stop_signal = WSTOPSIG(status);
+                printf("Child process (PID: %d) stopped due to signal %d\n", child_pid, stop_signal);
+            } else if (WIFCONTINUED(status)) {
+                printf("Child process (PID: %d) was resumed by SIGCONT\n", child_pid);
+            }
+        } else {
+            // Handle error
+            perror("wait");
+        }
+    }
+
+    return 0;
+
+}
+
+//======================================
+
+void example9(){
 	
 	if (execlp("ls","ls", "-l",NULL) == -1){
 		printf("Error");	
@@ -103,7 +157,7 @@ void example8(){
 
 //======================================
 
-void example9(int argc, char *argv[]){
+void example10(int argc, char *argv[]){
 	/*[ "./t","/bin/ls" ,"-l"]*/
 	char *program = argv[1];
 	// Starting from argc[1], we pass all the argiments to the program 
@@ -127,9 +181,9 @@ int main(int argc, char *argv[]){
 	//example5();
 	//example6();
 	//example7();
-	
 	//example8();
-	//example9(argc, argv);
+	//example9();
+	//example10(argc, argv);
 	return 0;
 	
 }
