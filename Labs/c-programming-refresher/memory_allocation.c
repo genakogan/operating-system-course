@@ -8,6 +8,7 @@ int one_dimensional_array_int(){
 
     // Dynamically allocate memory for an integer array of size n using malloc
     arr1D = (int *)malloc(n * sizeof(int));
+
     if (arr1D == NULL) {
         printf("Memory allocation failed\n");
         return 1;

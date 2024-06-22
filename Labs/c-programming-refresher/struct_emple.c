@@ -3,18 +3,27 @@
 #include <string.h>
 
 // Define the employee structure
-struct Employee {
+
+//struct Employee {
+//    int id;
+//    char name[100];
+//    int age;
+//    float salary;
+//};
+
+
+typedef struct  {
     int id;
     char name[100];
     int age;
     float salary;
-};
+}Employee;
 
 int main() {
     int num_employees = 3; // Number of employees
 
     // Allocate memory for an array of Employee structures using calloc
-    struct Employee *employees = (struct Employee *)calloc(num_employees, sizeof(struct Employee));
+    Employee *employees = (Employee *)calloc(num_employees, sizeof( Employee));
 
     // Check if the memory allocation was successful
     if (employees == NULL) {
