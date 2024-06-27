@@ -47,9 +47,11 @@ void example3(int argc, char *argv[]){
 	args[argc -1] = NULL; 
 	if(execv(program, args)==-1){
 		perror("execv");
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 	printf("This won't be printed is execv succeeds\n");
+	
+	
 }
 
 //======================================
@@ -109,13 +111,16 @@ int example6() {
         // Exit the child process
         exit(0); 
     } else {
+    
+        // Wait for the child process to finish
+        //wait(NULL); 
         printf("parent process\n");
         
         // Close writing end of the pipe in the parent
         close(myPipeFD[1]); 
         
         // Read from the pipe
-        read(myPipeFD[0], buf, sizeof(buf)); 
+        read(myPipeFD[0], buf, 1); 
         printf("I read the message from the buffer: %s\n", buf);
         
         // Close reading end of the pipe in the parent
@@ -139,7 +144,7 @@ int example7(){
 	int fd1[2]; // Used to store two ends of first pipe
 	int fd2[2]; // Used to store two ends of second pipe
 
-	char fixed_str[] = "forgeeks.org";
+	char fixed_str[] = "google.com";
 	char input_str[100];
 	pid_t p;
 
@@ -245,7 +250,7 @@ int example8(){
         perror("execlp");
         exit(EXIT_FAILURE);
     } else {
-
+        wait(NULL);
         close(p[WRITE]);
         dup2(p[READ], STDIN_FILENO);
         close(p[READ]);
@@ -369,7 +374,7 @@ int main(int argc, char *argv[]){
 	
 	// lab2
 	//example1();
-	//example2();
+	example2();
 	//example3(argc, argv);
 	
 	// exec
@@ -379,9 +384,10 @@ int main(int argc, char *argv[]){
 	//pipe
 	//example6();
 	//example7();
-    //example8();
+   
 
 	//dup
+	//example8();
 	//example9();
 	//example10();
     //example11();

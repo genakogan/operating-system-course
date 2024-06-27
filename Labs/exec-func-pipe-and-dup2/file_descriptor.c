@@ -12,13 +12,14 @@ int main() {
         perror("Failed to open file1.txt");
         return 1;
     }
-
+    
+    close(fd1);
     fd2 = socket(AF_INET, SOCK_STREAM, 0);
     if (fd2 == -1) {
         perror("Failed to create socket");
         return 1;
     }
-
+   
     fd3 = open("file2.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
     if (fd3 == -1) {
         perror("Failed to create file2.txt");
@@ -27,7 +28,7 @@ int main() {
 
     printf("fd1 = %d, fd2 = %d, fd3 = %d\n", fd1, fd2, fd3);
 
-    close(fd1);
+    //close(fd1);
     close(fd2);
     close(fd3);
 

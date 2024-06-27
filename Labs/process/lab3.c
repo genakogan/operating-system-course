@@ -57,13 +57,13 @@ void example5(){
 //======================================
 
 void example6(){
-	for(int i =0; i<1; i++){
+	for(int i =0; i<4; i++){
 		if(fork()==0){
 			printf("[son] pid %d from [parent] pid %d\n", getpid(),getppid());
-			//exit(0);
+			//exit(100+i);
 		}
 	}
-	for(int i =0; i<1; i++){
+	for(int i =0; i<4; i++){
 		printf("My pid is %d, my parent pid is %d\n",getpid(),getppid());
 		wait(NULL);
 	
@@ -73,8 +73,9 @@ void example6(){
 //======================================
 
 void example7(){
-	int i, stat;
-	pid_t pid[5];
+	int i;
+	
+	pid_t pid[5], stat;
 	for(i=0;i<5; i++){
 	
 		if (0 == (pid[i] = fork())){
@@ -104,7 +105,7 @@ void example7(){
 
 //======================================
 
-void example8(){
+int example8(){
 pid_t pid = fork();
 
     if (pid < 0) {
@@ -144,10 +145,40 @@ pid_t pid = fork();
     return 0;
 
 }
+//======================================
+
+int global_var = 10;
+
+void example9(){
+
+    pid_t pid;
+    
+    pid = fork();
+    
+    if(pid<0){
+        perror("Fork failed");
+        exit(1);
+    }else if (pid==0){
+        printf("Child process\n");
+        printf("global_var: %d\n",global_var);
+        global_var +=5;
+        printf("Modifie value of global_var: %d\n",global_var);
+        
+    }
+    else{
+        wait(NULL);
+        printf("parent process\n");
+        printf("global_var: %d\n",global_var);
+        global_var -=3;
+        printf("Modifie value of global_var: %d\n",global_var);
+    }
+
+}
+
 
 //======================================
 
-void example9(){
+void example10(){
 	
 	if (execlp("ls","ls", "-l",NULL) == -1){
 		printf("Error");	
@@ -157,7 +188,7 @@ void example9(){
 
 //======================================
 
-void example10(int argc, char *argv[]){
+void example11(int argc, char *argv[]){
 	/*[ "./t","/bin/ls" ,"-l"]*/
 	char *program = argv[1];
 	// Starting from argc[1], we pass all the argiments to the program 
@@ -174,7 +205,7 @@ void example10(int argc, char *argv[]){
 
 int main(int argc, char *argv[]){
 	
-	example1();
+	//example1();
 	//example2();
 	//example3();
 	//example4();
@@ -182,8 +213,9 @@ int main(int argc, char *argv[]){
 	//example6();
 	//example7();
 	//example8();
-	//example9();
-	//example10(argc, argv);
+	// example9();
+	//example10();
+	//example11(argc, argv);
 	return 0;
 	
 }
