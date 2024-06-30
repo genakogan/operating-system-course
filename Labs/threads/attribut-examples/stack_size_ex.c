@@ -13,6 +13,12 @@ int main() {
     pthread_t threads[NUM_THREADS];
     pthread_attr_t attr;
     size_t stack_size = 1024 * 1024;  // 1 MB (adjust as needed)
+    // 1 KB = 1024 bytes
+    // 1 MB = 1024 KB 
+    // 1 MB = 1048576 bytes
+    // 1 byte = 8 bits 
+    
+    
     int rc, t;
 
     // Initialize thread attribute

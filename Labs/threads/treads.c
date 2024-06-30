@@ -31,6 +31,8 @@ int main() {
     }
 
     printf("All threads completed. Exiting the main thread.\n");
-    pthread_exit(NULL);
+    //pthread_exit(NULL);
+    printf("TODO\n");
+    
 }
 
