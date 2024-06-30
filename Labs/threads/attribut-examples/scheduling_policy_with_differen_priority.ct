@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+
+#define NUM_THREADS 3
+
+void *thread_function(void *arg) {
+    int priority = *((int *)arg);
+    printf("Thread with priority %d is running\n", priority);
+    pthread_exit(NULL);
+}
+
+int main() {
+    pthread_t threads[NUM_THREADS];
+    pthread_attr_t attr;
+    struct sched_param param;
+    int rc, t;
+    int priorities[NUM_THREADS] = {50, 60, 70};  
+
+   
+    pthread_attr_init(&attr); 
+    pthread_attr_setschedpolicy(&attr, SCHED_FIFO);
+
+    for (t = 0; t < NUM_THREADS; t++) {
+        param.sched_priority = priorities[t];  
+        pthread_attr_setschedparam(&attr, &param);
+
+        printf("Creating thread %d with priority %d\n", t, priorities[t]);
+        rc = pthread_create(&threads[t], &attr, thread_function, (void *)&priorities[t]);
+        if (rc) {
+            printf("ERROR: return code from pthread_create() is %d\n", rc);
+            exit(-1);
+        }
+    }
+
+    pthread_attr_destroy(&attr);
+    printf("Main thread exiting\n");
+    pthread_exit(NULL);
+}
