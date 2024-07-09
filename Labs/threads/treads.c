@@ -8,6 +8,7 @@ void *thread_function(void *thread_id) {
     long tid;
     tid = (long)thread_id;
     printf("Hello World! It's me, thread #%ld!\n", tid);
+    printf("pid is %ld\n", pthread_self());
     pthread_exit(NULL);
 }
 
@@ -32,6 +33,7 @@ int main() {
 
     printf("All threads completed. Exiting the main thread.\n");
     //pthread_exit(NULL);
+    printf("pid is %ld\n", pthread_self());
     printf("TODO\n");
     
 }
