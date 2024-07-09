@@ -1,12 +1,16 @@
 #include <stdio.h>
 
 int main(void){
-    int wt[20], tat[20], i, k, n = 3, temp;
+    int wt[20], tat[20], i, k, n = 4, temp;
     float wt_sum,tat_sum ;
     int p[] = {0,1,2}; // processses
     int bt[] = {24,3,3}; //burst time
+    //int p[] = {0,1,2,3}; // processses
+    //int bt[] = {6,8,7,3}; //burst time
     wt_sum = wt[0] = 0; // wt for first process
     tat_sum = tat[0] =bt[0]; 
+    
+        
     
     for(i = 1; i<n; i++){
         wt[i] = wt[i-1] + bt[i-1]; // wait time current proc = bt-wt (prev proc)
