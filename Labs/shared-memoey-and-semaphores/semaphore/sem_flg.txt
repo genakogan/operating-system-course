@@ -1,0 +1,38 @@
+Structure Definition:
+
+c
+
+struct sembuf {
+    unsigned short sem_num;  // Semaphore index in the set
+    short sem_op;            // Semaphore operation
+    short sem_flg;           // Operation flags
+};
+
+    struct sembuf is a structure defined in <sys/sem.h> for operations on POSIX semaphores (semop).
+
+Members:
+
+    sem_num: Specifies the index of the semaphore within the semaphore set on which the operation is to be performed.
+    sem_op: Specifies the semaphore operation to perform (-1 for decrement, 1 for increment, or custom values).
+    sem_flg: Specifies flags that control aspects of the semaphore operation.
+
+Possible Flag Values:
+
+    SEM_UNDO: This flag enables automatic undoing of semaphore operations when the process exits or terminates due to a signal. It ensures that operations are undone if the process holding the semaphore terminates abnormally.
+    IPC_NOWAIT: This flag causes semop to return immediately with an error (EAGAIN) if the semaphore operation cannot be performed immediately (i.e., the semaphore value is not currently zero for a decrement operation).
+    Other system-specific flags may exist depending on the operating system and its implementation of semaphores.
+
+Common Usage:
+
+    SEM_UNDO: Useful to prevent semaphores from being held indefinitely due to abnormal process termination. It ensures that semaphore adjustments are automatically reversed upon process termination.
+    IPC_NOWAIT: Allows non-blocking semaphore operations, useful in scenarios where immediate completion of the operation is required without waiting for the semaphore to become available.
+
+Example Usage:
+
+c
+
+sb.sem_num = 0;      // Semaphore index
+sb.sem_op = -1;      // Decrement semaphore value
+sb.sem_flg = SEM_UNDO;  // Enable automatic undoing of semaphore operations
+
+    In this example, sb.sem_flg = SEM_UNDO; ensures that any changes made to the semaphore (sem_num = 0) are automatically reversed if the process terminates abnormally.
