@@ -1,5 +1,6 @@
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h> 
 
 int i=0;
 void my_handler(int sig){
