@@ -20,7 +20,7 @@ int main() {
     // Infinite loop to keep the program running until the alarm triggers
     while(1) {
         // Do some work while waiting for the alarm
-        sleep(1);
+        sleep(10);
         printf("Still waiting...\n");
     }
 

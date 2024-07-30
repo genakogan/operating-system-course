@@ -1,8 +1,8 @@
-#include <stdio.h
+#include <stdio.h>
 #include <wait.h>
 #include <signal.h>
 #include <stdlib.h>
-
+#include <unistd.h> 
 
 /*SIGUSR1 and SIGUSR2 are signals in Unix-like operating
 systems that are reserved for user-defined purposes.
@@ -30,13 +30,13 @@ int counter = 0;
 
 void handler1(int sig){
     counter++;
-    printf("cointer = %d\n", counter);
+    printf("handler1, cointer = %d\n, id: %d\n", counter, getpid());
     kill(pid,SIGUSR1);
 }
 
 void handler2(int sig){
     counter += 3;
-    printf("cointer = %d\n", counter);
+    printf("handler2, cointer = %d\n,id: %d \n", counter, getpid());
     exit(0);
 }
 
